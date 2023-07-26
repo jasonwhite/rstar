@@ -1,5 +1,5 @@
 use core::fmt::Debug;
-use num_traits::{Bounded, Num, Signed, Zero};
+use num_traits::{Bounded, Num, Zero};
 
 /// Defines a number type that is compatible with rstar.
 ///
@@ -15,7 +15,7 @@ use num_traits::{Bounded, Num, Signed, Zero};
 /// # Example
 /// ```
 /// # extern crate num_traits;
-/// use num_traits::{Bounded, Num, Signed};
+/// use num_traits::{Bounded, Num};
 ///
 /// #[derive(Clone, Copy, PartialEq, PartialOrd, Debug)]
 /// struct MyFancyNumberType(f32);
@@ -25,19 +25,6 @@ use num_traits::{Bounded, Num, Signed, Zero};
 /// # fn min_value() -> Self { MyFancyNumberType(Bounded::min_value()) }
 /// #
 /// # fn max_value() -> Self { MyFancyNumberType(Bounded::max_value()) }
-/// }
-///
-/// impl Signed for MyFancyNumberType {
-///   // ... details hidden ...
-/// # fn abs(&self) -> Self { unimplemented!() }
-/// #
-/// # fn abs_sub(&self, other: &Self) -> Self { unimplemented!() }
-/// #
-/// # fn signum(&self) -> Self { unimplemented!() }
-/// #
-/// # fn is_positive(&self) -> bool { unimplemented!() }
-/// #
-/// # fn is_negative(&self) -> bool { unimplemented!() }
 /// }
 ///
 /// impl Num for MyFancyNumberType {
@@ -88,17 +75,11 @@ use num_traits::{Bounded, Num, Signed, Zero};
 /// #   type Output = Self;
 /// #   fn rem(self, rhs: Self) -> Self { unimplemented!() }
 /// # }
-/// #
-/// # impl core::ops::Neg for MyFancyNumberType {
-/// #   type Output = Self;
-/// #   fn neg(self) -> Self { unimplemented!() }
-/// # }
-/// #
 /// ```
 ///
-pub trait RTreeNum: Bounded + Num + Clone + Copy + Signed + PartialOrd + Debug {}
+pub trait RTreeNum: Bounded + Num + Clone + Copy + PartialOrd + Debug {}
 
-impl<S> RTreeNum for S where S: Bounded + Num + Clone + Copy + Signed + PartialOrd + Debug {}
+impl<S> RTreeNum for S where S: Bounded + Num + Clone + Copy + PartialOrd + Debug {}
 
 /// Defines a point type that is compatible with rstar.
 ///
