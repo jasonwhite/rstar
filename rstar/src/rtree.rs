@@ -689,7 +689,7 @@ where
     ///   [0.0, 1.0],
     ///   [1.0, 0.0],
     /// ]);
-    /// assert_eq!(tree.nearest_neighbors(&[1.0, 1.0]), &[&[0.0, 1.0], &[1.0, 0.0]]);
+    /// assert_eq!(tree.nearest_neighbors(&[1.0, 1.0]), &[&[1.0, 0.0], &[0.0, 1.0]]);
     /// assert_eq!(tree.nearest_neighbors(&[0.01, 0.01]), &[&[0.0, 0.0]]);
     /// ```
     pub fn nearest_neighbors(&self, query_point: &<T::Envelope as Envelope>::Point) -> Vec<&T> {
@@ -905,6 +905,14 @@ mod test {
         assert_eq!(tree.size(), 1);
         assert!(tree.contains(&[0.02, 0.4]));
         assert!(!tree.contains(&[0.3, 0.2]));
+    }
+
+    #[test]
+    fn test_unsigned() {
+        let mut tree = RTree::new();
+        tree.insert([0u64, 100]);
+        assert_eq!(tree.size(), 1);
+        assert!(tree.contains(&[0u64, 100]));
     }
 
     #[test]
