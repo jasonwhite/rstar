@@ -339,9 +339,8 @@ where
         let l_center = l.envelope().center();
         let r_center = r.envelope().center();
         l_center
-            .sub(&center)
-            .length_2()
-            .partial_cmp(&(r_center.sub(&center)).length_2())
+            .distance_2(&center)
+            .partial_cmp(&r_center.distance_2(&center))
             .unwrap()
     });
     let num_children = node.children.len();

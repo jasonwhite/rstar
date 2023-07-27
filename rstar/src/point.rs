@@ -245,6 +245,19 @@ pub trait PointExt: Point {
         self.component_wise(other, |l, r| l + r)
     }
 
+    /// Calculates the absolute difference between `other` and `self`, component
+    /// wise.
+    fn abs_diff(&self, other: &Self) -> Self {
+        self.component_wise(other, |l, r| {
+            // TODO: Use `wrapping_sub` to avoid panics.
+            if l < r {
+                r - l
+            } else {
+                l - r
+            }
+        })
+    }
+
     /// Multiplies `self` with `scalar` component wise.
     fn mul(&self, scalar: Self::Scalar) -> Self {
         self.map(|coordinate| coordinate * scalar)
@@ -257,7 +270,7 @@ pub trait PointExt: Point {
 
     /// Returns the squared distance between `self` and `other`.
     fn distance_2(&self, other: &Self) -> Self::Scalar {
-        self.sub(other).length_2()
+        self.abs_diff(other).length_2()
     }
 }
 
